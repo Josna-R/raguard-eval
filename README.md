@@ -1,5 +1,7 @@
 # RAGuard — LLM Evaluation & Observability Harness
 
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Tests](https://img.shields.io/badge/tests-5%2F5%20passing-brightgreen) ![License](https://img.shields.io/badge/license-MIT-lightgrey) ![Offline](https://img.shields.io/badge/runs-offline%2C%20no%20API%20key-success)
+
 A reference-free evaluation harness for RAG/LLM pipelines: scores every
 (question, retrieved context, generated answer) triple for **groundedness**
 (is the answer actually supported by the retrieved context — the standard
@@ -8,6 +10,20 @@ hallucination proxy), **relevance** (does it address the question), and
 then aggregates into a scorecard with a Streamlit dashboard. Runs fully
 offline with zero API cost; an optional LLM-as-judge mode is available for
 higher-fidelity faithfulness scoring.
+
+**TL;DR:** feed it a batch of (question, context, answer) triples and it
+tells you which ones are likely hallucinated — no reference answers, no
+API key, no GPU required. See [Get the code](#get-the-code) below.
+
+## What it does
+
+Point it at a JSON file of RAG outputs (question + retrieved context +
+generated answer). For each one it computes a **groundedness** score
+(does the answer's content actually appear in the retrieved context?), a
+**relevance** score (does the answer address the question?), and — if you
+supply labeled relevant-chunk IDs — **retrieval precision/recall**. Anything
+below a groundedness threshold gets auto-flagged as a likely hallucination.
+Results are viewable as a CLI table or an interactive Streamlit dashboard.
 
 ## Why this project
 
@@ -34,6 +50,13 @@ case-3-grounded            0.504      0.282      3.02      1.000              no
 case-4-off-topic           0.000      0.000      1.00      0.500             YES
 ```
 
+## Get the code
+
+```bash
+git clone https://github.com/Josna-R/raguard-eval.git
+cd raguard-eval
+```
+
 ## Quickstart
 
 ```bash
@@ -49,6 +72,25 @@ python -m raguard.cli sample_data/eval_cases.json
 
 # Or the interactive dashboard
 streamlit run raguard/dashboard.py
+```
+
+The CLI prints the table shown above straight away using the bundled
+`sample_data/eval_cases.json`. The dashboard opens at `http://localhost:8501`
+with the same data, plus aggregate KPI cards and a list of flagged cases.
+
+## Project structure
+
+```
+raguard-eval/
+├── raguard/
+│   ├── metrics.py     # groundedness / relevance / retrieval precision & recall
+│   ├── judge.py         # Judge interface + HeuristicJudge / OpenAIJudge
+│   ├── harness.py        # EvalHarness — runs metrics + judge over a batch, aggregates
+│   ├── cli.py              # command-line scorecard
+│   └── dashboard.py        # Streamlit dashboard
+├── sample_data/eval_cases.json  # paired grounded/hallucinated fixtures
+├── tests/test_harness.py         # hallucination-detection + metrics tests
+└── requirements.txt
 ```
 
 ## Using it on your own RAG pipeline's outputs
@@ -80,3 +122,11 @@ pluggable OpenAI LLM-as-judge
 - Add a CI gate that fails a PR if `hallucination_flag_rate` regresses.
 - Track scores over time in MLflow to catch drift after a prompt or model change.
 - Add per-category breakdowns (e.g. by document source or question type).
+
+## Author
+
+Built by [Josna Deepa Rayana](https://github.com/Josna-R), AI/ML Engineer &
+Data Scientist. Part of a three-project GenAI portfolio alongside
+[DocuMind RAG](https://github.com/Josna-R/documind-rag) (retrieval-augmented
+generation) and [AgentCrew](https://github.com/Josna-R/agentcrew-multiagent)
+(multi-agent orchestration).
