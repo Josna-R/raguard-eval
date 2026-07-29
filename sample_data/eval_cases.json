@@ -1,0 +1,42 @@
+[
+  {
+    "id": "case-1-grounded",
+    "question": "How many days of PTO do employees get?",
+    "contexts": [
+      "Full-time employees accrue 15 days of PTO per year during their first two years of employment, increasing to 20 days after two years and 25 days after five years."
+    ],
+    "answer": "Employees accrue 15 days of PTO per year for their first two years, then 20 days after two years, and 25 days after five years.",
+    "retrieved_ids": ["handbook-chunk-3", "handbook-chunk-1"],
+    "relevant_ids": ["handbook-chunk-3"]
+  },
+  {
+    "id": "case-2-hallucinated",
+    "question": "How many days of PTO do employees get?",
+    "contexts": [
+      "Full-time employees accrue 15 days of PTO per year during their first two years of employment, increasing to 20 days after two years and 25 days after five years."
+    ],
+    "answer": "All employees, including part-time and contractors, receive unlimited PTO starting from their first day, per company-wide policy revised last year.",
+    "retrieved_ids": ["handbook-chunk-3", "handbook-chunk-4"],
+    "relevant_ids": ["handbook-chunk-3"]
+  },
+  {
+    "id": "case-3-grounded",
+    "question": "What is the uptime SLA for the Enterprise plan?",
+    "contexts": [
+      "The Enterprise plan includes a 99.9% uptime SLA measured monthly, with service credits issued for any month that falls below that threshold."
+    ],
+    "answer": "The Enterprise plan guarantees 99.9% uptime measured monthly, and issues service credits if that threshold isn't met.",
+    "retrieved_ids": ["faq-chunk-4"],
+    "relevant_ids": ["faq-chunk-4"]
+  },
+  {
+    "id": "case-4-off-topic",
+    "question": "What is the uptime SLA for the Enterprise plan?",
+    "contexts": [
+      "The Enterprise plan includes a 99.9% uptime SLA measured monthly, with service credits issued for any month that falls below that threshold."
+    ],
+    "answer": "Our platform is SOC 2 Type II certified and encrypts data at rest using AES-256.",
+    "retrieved_ids": ["faq-chunk-4", "faq-chunk-3"],
+    "relevant_ids": ["faq-chunk-4"]
+  }
+]
