@@ -126,7 +126,4 @@ pluggable OpenAI LLM-as-judge
 ## Author
 
 Built by [Josna Deepa Rayana](https://github.com/Josna-R), AI/ML Engineer &
-Data Scientist. Part of a three-project GenAI portfolio alongside
-[DocuMind RAG](https://github.com/Josna-R/documind-rag) (retrieval-augmented
-generation) and [AgentCrew](https://github.com/Josna-R/agentcrew-multiagent)
-(multi-agent orchestration).
+Data Scientist. 
