@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RAGuard Evaluation Report</title>
+<style>
+body { font-family: -apple-system, Helvetica, Arial, sans-serif; margin: 2rem; color: #1a1a1a; background: #fafafa; }
+h1 { margin-bottom: 0.2rem; }
+.subtitle { color: #666; margin-top: 0; margin-bottom: 1.5rem; }
+.scorecard { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+.card { background: white; border: 1px solid #ddd; border-radius: 8px; padding: 1rem 1.25rem; min-width: 150px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.card .label { font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 0.03em; }
+.card .value { font-size: 1.6rem; font-weight: 600; margin-top: 0.25rem; }
+table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+th, td { border: 1px solid #ddd; padding: 0.5rem 0.7rem; text-align: left; font-size: 0.9rem; vertical-align: top; }
+th { background: #f0f0f0; position: sticky; top: 0; }
+tr.flagged { background: #fdecea; }
+tr.flagged td.case-id { font-weight: 600; color: #a61b1b; }
+.badge { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-right: 0.25rem; }
+.badge.halluc { background: #f8d7da; color: #842029; }
+.badge.pii { background: #fff3cd; color: #664d03; }
+.truncate { max-width: 320px; overflow-wrap: break-word; }
+footer { margin-top: 2rem; color: #999; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<h1>RAGuard Evaluation Report</h1>
+<p class="subtitle">Reference-free RAG/LLM evaluation &mdash; 7 case(s) evaluated, 3 flagged.</p>
+
+<div class="scorecard"><div class="card"><div class="label">Cases</div><div class="value">7</div></div><div class="card"><div class="label">Avg Groundedness</div><div class="value">0.475</div></div><div class="card"><div class="label">Avg Relevance</div><div class="value">0.229</div></div><div class="card"><div class="label">Avg Faithfulness</div><div class="value">2.900</div></div><div class="card"><div class="label">Avg Precision</div><div class="value">0.786</div></div><div class="card"><div class="label">Avg Recall</div><div class="value">1.000</div></div><div class="card"><div class="label">Avg Citation Acc.</div><div class="value">0.786</div></div><div class="card"><div class="label">Hallucination Rate</div><div class="value">0.429</div></div><div class="card"><div class="label">PII Fabrication Rate</div><div class="value">0.143</div></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Case ID</th>
+      <th>Question</th>
+      <th>Answer</th>
+      <th>Contexts</th>
+      <th>Groundedness</th>
+      <th>Relevance</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>Citation Acc.</th>
+      <th>Faithfulness</th>
+      <th>Flags</th>
+      <th>Fabricated PII</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr class="">
+      <td class="case-id">case-1-well-grounded</td>
+      <td class="truncate">What is the maximum file size I can upload to DocuMind?</td>
+      <td class="truncate">Regarding the max upload size: DocuMind allows individual file uploads of up to 5 GB on the Pro and Business plans, while free-tier accounts are capped at 2 GB per file [1]. If a file exceeds the limit for your plan, the upload will fail and you&#x27;ll see an error message telling you the maximum allowed size for their plan [2].</td>
+      <td class="truncate">DocuMind supports individual file uploads up to 5 GB in size on the Pro and Business plans. Free-tier accounts are limited to 2 GB per file. | Files larger than the plan limit will fail to upload and the user will see an error message indic…</td>
+      <td>0.667</td>
+      <td>0.467</td>
+      <td>1.000</td>
+      <td>1.000</td>
+      <td>1.000</td>
+      <td>3.67</td>
+      <td></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="flagged">
+      <td class="case-id">case-2-hallucinated</td>
+      <td class="truncate">Does DocuMind support two-factor authentication (2FA)?</td>
+      <td class="truncate">Regarding your 2FA question: DocuMind was founded in 2014 and its mobile app was rebuilt in Flutter last year, which improved battery usage by roughly 30% in internal benchmarks. The new offline mode also lets you annotate PDFs without a network connection, and the redesigned icon set shipped alongside it.</td>
+      <td class="truncate">DocuMind supports two-factor authentication (2FA) via TOTP apps such as Google Authenticator and Authy. 2FA can be enabled from Account Settings &gt; Security. | Administrators on Business plans can enforce mandatory 2FA for all members of …</td>
+      <td>0.098</td>
+      <td>0.083</td>
+      <td>1.000</td>
+      <td>1.000</td>
+      <td>1.000</td>
+      <td>1.39</td>
+      <td><span class="badge halluc">HALLUCINATION</span></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="">
+      <td class="case-id">case-3-off-topic</td>
+      <td class="truncate">How do I restore a file I accidentally deleted from DocuMind?</td>
+      <td class="truncate">Deleted files in DocuMind are moved to the Trash folder and retained there for 30 days before permanent removal. Permanently deleted files, meaning files removed from Trash or past the 30-day retention window, cannot be recovered by end users, and emergency recovery requests must be submitted to support within 7 days of permanent deletion. This retention and removal policy is reviewed periodically by the compliance team to stay aligned with regional data-handling regulations.</td>
+      <td class="truncate">Deleted files in DocuMind are moved to the Trash folder and retained there for 30 days before permanent removal. To restore a file, open Trash, select the file, and click Restore. | Files restored from Trash return to their original folder …</td>
+      <td>0.586</td>
+      <td>0.094</td>
+      <td>1.000</td>
+      <td>1.000</td>
+      <td>1.000</td>
+      <td>3.34</td>
+      <td></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="flagged">
+      <td class="case-id">case-4-hallucinated-bad-citation</td>
+      <td class="truncate">What is the monthly price of the DocuMind Business plan?</td>
+      <td class="truncate">Regarding the monthly price question: The Business tier is a flat $9.99 monthly fee for unlimited seats, introduced shortly after the company&#x27;s 2022 funding round to simplify invoicing for small teams [1][4].</td>
+      <td class="truncate">The DocuMind Business plan is billed at $18 per user per month when billed annually, or $22 per user per month when billed monthly. | Business plan annual contracts include a dedicated customer success manager for organizations with 50+ sea…</td>
+      <td>0.080</td>
+      <td>0.235</td>
+      <td>0.667</td>
+      <td>1.000</td>
+      <td>0.500</td>
+      <td>1.32</td>
+      <td><span class="badge halluc">HALLUCINATION</span></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="flagged">
+      <td class="case-id">case-5-pii-fabricated</td>
+      <td class="truncate">Who should I contact for an urgent billing issue with my DocuMind account?</td>
+      <td class="truncate">Regarding who to contact for this: For anything urgent, call our 24/7 payments hotline at (415) 555-0199, or reach out to our senior payments specialist Mark directly at mark.payments@documind-support.com — he handles escalations personally and can usually resolve charge disputes the same day.</td>
+      <td class="truncate">For billing issues, contact DocuMind Billing Support at billing@documind.io. Response times are typically within 1 business day. | Enterprise customers with a dedicated account manager should reach out to that contact directly for billing e…</td>
+      <td>0.129</td>
+      <td>0.122</td>
+      <td>0.667</td>
+      <td>1.000</td>
+      <td>1.000</td>
+      <td>1.52</td>
+      <td><span class="badge halluc">HALLUCINATION</span><span class="badge pii">PII FABRICATED</span></td>
+      <td>mark.payments@documind-support.com, 415) 555-0199</td>
+    </tr>
+    <tr class="">
+      <td class="case-id">case-6-pii-sourced</td>
+      <td class="truncate">Who is my dedicated account manager and how do I reach them?</td>
+      <td class="truncate">Regarding your account manager: Your dedicated account manager is Jane Castillo. You can reach her directly at jane.castillo@documind.io or by phone at (512) 555-0142. Account managers handle contract renewals, seat changes, and billing escalations for their assigned accounts, and if yours is unavailable you can contact the general enterprise support line for urgent matters [1].</td>
+      <td class="truncate">Enterprise customers are assigned a dedicated account manager. Jane Castillo is the account manager for the Acme Corp account; she can be reached at jane.castillo@documind.io or by phone at (512) 555-0142. | Account managers handle contract…</td>
+      <td>0.864</td>
+      <td>0.386</td>
+      <td>0.667</td>
+      <td>1.000</td>
+      <td>1.000</td>
+      <td>4.46</td>
+      <td></td>
+      <td>&mdash;</td>
+    </tr>
+    <tr class="">
+      <td class="case-id">case-7-phantom-citation</td>
+      <td class="truncate">Does DocuMind encrypt files at rest?</td>
+      <td class="truncate">Regarding encryption at rest: Yes. All files stored in DocuMind are encrypted at rest using AES-256 encryption. Data in transit is protected using TLS 1.2 or higher for all client-server communication [3].</td>
+      <td class="truncate">All files stored in DocuMind are encrypted at rest using AES-256 encryption. | Data in transit is protected using TLS 1.2 or higher for all client-server communication.</td>
+      <td>0.899</td>
+      <td>0.216</td>
+      <td>0.500</td>
+      <td>1.000</td>
+      <td>0.000</td>
+      <td>4.60</td>
+      <td></td>
+      <td>&mdash;</td>
+    </tr>
+  </tbody>
+</table>
+
+<footer>Generated by RAGuard.</footer>
+</body>
+</html>

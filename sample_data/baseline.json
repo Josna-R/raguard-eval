@@ -1,0 +1,11 @@
+{
+  "avg_citation_accuracy": 0.7857142857142857,
+  "avg_faithfulness_score": 2.9,
+  "avg_groundedness": 0.4745105181691223,
+  "avg_relevance": 0.2289538848168616,
+  "avg_retrieval_precision": 0.7857142857142857,
+  "avg_retrieval_recall": 1.0,
+  "hallucination_flag_rate": 0.42857142857142855,
+  "n_cases": 7,
+  "pii_fabrication_rate": 0.14285714285714285
+}
