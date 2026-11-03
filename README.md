@@ -15,10 +15,6 @@ rolls them into a scorecard, and compares that scorecard against a saved
 baseline so a regression in hallucination rate, citation accuracy, or PII
 fabrication can block a pull request automatically.
 
-Built by [Josna Deepa Rayana](https://github.com/Josna-R) as a portfolio
-project demonstrating practical RAG evaluation and CI tooling for
-AI/ML engineering roles.
-
 ## Why RAGuard
 
 Most RAG eval setups require hand-written gold answers for every test
