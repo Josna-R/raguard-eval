@@ -49,6 +49,13 @@ misses.
   scoring/aggregation, regression comparison in both directions, HTML
   escaping, and the full CLI.
 
+## Get the code
+
+```bash
+git clone https://github.com/Josna-R/raguard-eval.git
+cd raguard-eval
+```
+
 ## Quickstart
 
 ```bash
